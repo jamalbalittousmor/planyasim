@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Симулятор Плани — ПланяОС v2</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+    <!-- BOOT -->
+    <section id="boot" class="screen active">
+      <div class="boot-box">
+        <div class="boot-logo"><span>ПЛАНЯ</span><b>ОС</b><i>v2.0</i></div>
+        <pre id="bootLog"></pre>
+        <button id="bootBtn" class="btn btn-big btn-yellow" disabled>
+          <svg><use href="#i-lightning"/></svg><span>ЗАГРУЗКА…</span>
+        </button>
+        <p class="boot-hint">неофициальная фан-игра · звук включится после нажатия</p>
+      </div>
+      <div class="checker-strip bottom"></div>
+    </section>
+
+    <!-- TITLE -->
+    <section id="title" class="screen">
+      <div class="title-bg"></div>
+      <div class="halftone"></div>
+      <div class="title-left">
+        <div class="title-sticker tilt-l">неофициальная фан-игра</div>
+        <h1 class="title-logo"><span class="l1">СИМУЛЯТОР</span><span class="l2">ПЛАНИ</span></h1>
+        <div class="title-sub">«Захват мира начинается со стрима на час.<br>Который на час опоздает.»</div>
+        <div class="title-menu">
+          <button class="btn btn-big btn-yellow" id="btnContinue"><svg><use href="#i-play"/></svg><span>ПРОДОЛЖИТЬ</span><small id="contInfo"></small></button>
+          <button class="btn btn-big btn-cobalt" id="btnNew"><svg><use href="#i-sparkle"/></svg><span>НОВАЯ ИГРА</span></button>
+          <div class="row">
+            <button class="btn btn-mid" id="btnTitleMemo"><svg><use href="#i-book-open"/></svg><span>Мемопедия</span></button>
+            <button class="btn btn-mid" id="btnTitleSettings"><svg><use href="#i-gear-six"/></svg><span>Настройки</span></button>
+          </div>
+        </div>
+        <div class="title-links">
+          <span class="lbl">настоящая Планя тут →</span>
+          <a href="https://www.youtube.com/channel/UCQaGj_l3dqmGWJLEbEmwgFQ" target="_blank" class="brand yt" title="YouTube"><svg><use href="#i-brand-youtube"/></svg></a>
+          <a href="https://www.twitch.tv/planyach" target="_blank" class="brand tw" title="Twitch"><svg><use href="#i-brand-twitch"/></svg></a>
+          <a href="https://t.me/PlanyaCh" target="_blank" class="brand tg" title="Telegram"><svg><use href="#i-brand-telegram"/></svg></a>
+          <a href="https://vk.ru/planyatyan" target="_blank" class="brand vk" title="VK"><svg><use href="#i-brand-vk"/></svg></a>
+        </div>
+      </div>
+      <div class="title-rig rig-mount" id="titleRig"></div>
+      <div class="ticker"><div class="ticker-track" id="titleTicker"></div></div>
+    </section>
+
+    <!-- HUB -->
+    <section id="hub" class="screen">
+      <div class="hub-bg"></div>
+      <div class="halftone"></div>
+      <header class="topbar">
+        <div class="daybox">
+          <div class="dayname" id="hDayName">ПН</div>
+          <div class="daynum"><b id="hDay">1</b><small>день</small></div>
+          <div class="slots" id="hSlots"></div>
+        </div>
+        <div class="statchips" id="hStats"></div>
+        <div class="topbtns">
+          <button class="iconbtn" id="btnMemo" title="Мемопедия"><svg><use href="#i-book-open"/></svg></button>
+          <button class="iconbtn" id="btnAch" title="Достижения"><svg><use href="#i-trophy"/></svg></button>
+          <button class="iconbtn" id="btnSettings" title="Настройки"><svg><use href="#i-gear-six"/></svg></button>
+        </div>
+      </header>
+      <div class="hub-left">
+        <div class="rig-mount" id="hubRig"></div>
+        <div class="bubble" id="hubBubble"><span></span></div>
+        <div class="needs" id="hNeeds"></div>
+      </div>
+      <div class="hub-right">
+        <div class="goalbar" id="hGoal"></div>
+        <div class="actions" id="hActions"></div>
+      </div>
+      <div class="plan-note" id="hPlan"></div>
+      <div class="feed" id="hFeed"></div>
+    </section>
+
+    <!-- STREAM -->
+    <section id="stream" class="screen">
+      <div class="obs">
+        <div class="obs-scene" id="sScene">
+          <div class="scene-bg" id="sSceneBg"></div>
+          <div class="scene-fx" id="sSceneFx"></div>
+          <div class="scene-title" id="sSceneTitle"></div>
+          <div class="alert-layer" id="sAlerts"></div>
+          <div class="rig-mount stream-rig" id="streamRig"></div>
+          <div class="bubble stream-bubble" id="sBubble"><span></span></div>
+          <div class="combo" id="sCombo"></div>
+        </div>
+        <aside class="chat">
+          <div class="chat-head"><svg><use href="#i-chat-circle-dots"/></svg> ЧАТ <span id="sChatPlatform">twitch</span></div>
+          <div class="chat-log" id="sChat"></div>
+        </aside>
+        <div class="s-top">
+          <div class="live"><i></i>LIVE <span id="sTime">00:00</span></div>
+          <div class="viewers"><svg><use href="#i-eye"/></svg><b id="sViewers">0</b></div>
+          <div class="hype"><span>ХАЙП</span><div class="bar"><i id="sHype"></i></div><b id="sHypeN">0</b></div>
+          <div class="act" id="sAct">АКТ 1</div>
+        </div>
+        <div class="demand" id="sDemand"><small>ЧАТ ХОЧЕТ</small><b id="sDemandTag">—</b><svg class="ring" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" id="sDemandRing"/></svg></div>
+        <div class="gremlin-meter"><span class="l">СЕЙСО</span><div class="gm-track"><i id="sGremlin"></i></div><span class="r">ГРЕМЛИН</span></div>
+        <div class="s-bottom">
+          <div class="s-energy"><div class="en-label">СИЛЫ</div><div class="pips" id="sPips"></div></div>
+          <div class="hand" id="sHand"></div>
+          <div class="s-side">
+            <div class="deckinfo" id="sDeck"></div>
+          </div>
+        </div>
+        <div class="s-overlay" id="sOverlay"></div>
+      </div>
+    </section>
+
+    <!-- RHYTHM -->
+    <section id="rhythm" class="screen">
+      <div class="r-bg" id="rBg"></div>
+      <canvas id="rViz" width="1600" height="900"></canvas>
+      <div class="rig-mount r-rig" id="rhythmRig"></div>
+      <div class="r-head">
+        <div class="r-song"><small id="rArtist">Планя</small><b id="rTitle">—</b></div>
+        <div class="r-score"><b id="rScore">0</b><small>очки</small></div>
+      </div>
+      <div class="r-lanes-wrap">
+        <canvas id="rCanvas" width="520" height="820"></canvas>
+        <div class="r-judge" id="rJudge"></div>
+        <div class="r-combo" id="rCombo"></div>
+      </div>
+      <div class="r-progress"><i id="rProg"></i></div>
+      <div class="r-keys">D · F · J · K &nbsp;|&nbsp; Esc — пауза</div>
+    </section>
+
+    <div id="modalLayer"></div>
+    <div id="toastLayer"></div>
+    <div id="fxLayer"></div>
+    <div id="cursorDot"></div>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/sfx.js"></script>
+<script src="assets/sprites.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/Draggable.min.js"></script>
+<script src="vendor/InertiaPlugin.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/CustomEase.min.js"></script>
+<script src="vendor/pixi.min.js"></script>
+<script src="vendor/Tone.js"></script>
+<script src="vendor/confetti.browser.js"></script>
+<script src="js/data.js"></script>
+<script src="js/cards.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/rig.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/minis.js"></script>
+<script src="js/rhythm.js"></script>
+<script src="js/stream.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
